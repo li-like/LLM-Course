@@ -5,7 +5,7 @@ import sys
 import os
 
 # 确保导入路径正确
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..', 'src'))
 from llm_planner.task_allocator import LLMCommander
 from swarm_ctrl.drone_client import SwarmManager
 
