@@ -3,6 +3,23 @@ import json
 import httpx
 from openai import OpenAI
 
+# 环境边界配置 (根据 Floor 缩放 8.0 推算: 10m * 8 = 80m)
+# 中心在 (0,0)，半径 40m。留 5m 缓冲，半径设为 35m。
+ENV_CONFIG = {
+    "x_min": -35.0,
+    "x_max": 35.0,
+    "y_min": -35.0,
+    "y_max": 35.0,
+    "z_fly": -5.0  # 飞行高度
+}
+
+# 提示词补充信息
+ENV_PROMPT_TEXT = f"""
+当前飞行空域限制为一个 80x80 米的正方形区域。
+有效任务坐标范围：X [{ENV_CONFIG['x_min']}, {ENV_CONFIG['x_max']}], Y [{ENV_CONFIG['y_min']}, {ENV_CONFIG['y_max']}]。
+请确保所有航点都在此坐标范围内，切勿越界。
+"""
+
 
 class LLMCommander:
     def __init__(self, api_key):
